@@ -74,6 +74,8 @@ footer {
   backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.03);
   transition: transform .45s cubic-bezier(.2, .9, .2, 1), box-shadow .35s;
+  align-self: start; 
+  height: fit-content;
 }
 .card:hover {
   transform: translateY(-6px);
@@ -333,6 +335,7 @@ p {
 @media (max-width:900px) {
   .grid {
     grid-template-columns: 1fr;
+    
   }
   .avatar {
     /* This now correctly targets the container */
