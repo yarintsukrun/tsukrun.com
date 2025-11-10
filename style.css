@@ -1,0 +1,346 @@
+/* === 1. Root Variables & Resets === */
+:root {
+  --bg: #05060a; /* Background color (dark) */
+  --card: #07122a; /* Card background (darker blue) - not used directly, but good to keep */
+  --accent: #a64dff; /* PRIMARY ACCENT COLOR: Purple */
+  --accent-2: #e68aff; /* SECONDARY ACCENT COLOR: Lighter Purple */
+  --muted: #9aa4b2; /* Muted text color */
+  --glass: rgba(255, 255, 255, 0.03); /* Glass effect for cards */
+  --glass-2: rgba(255, 255, 255, 0.02);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+/* === 2. Global Styles (Body, Layout) === */
+body {
+  margin: 0;
+  font-family: 'Heebo', system-ui, Arial;
+  /* Radial gradients adjusted to purple/pink hues */
+  background: radial-gradient(1200px 600px at 10% 20%, rgba(54, 13, 54, 0.6), transparent),
+    radial-gradient(900px 500px at 90% 80%, rgba(60, 8, 34, 0.5), transparent),
+    var(--bg);
+  color: #e6eef6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
+}
+
+.stage {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+canvas#particles {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 48px auto;
+  padding: 28px;
+  position: relative;
+  z-index: 2;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 28px;
+}
+
+footer {
+  margin-top: 26px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* === 3. Core Components (Card, Button, Tags) === */
+.card {
+  margin-bottom: 20px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 12px 10px rgba(2, 8, 20, 0.7);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  transition: transform .45s cubic-bezier(.2, .9, .2, 1), box-shadow .35s;
+}
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 80px rgba(2, 8, 20, 0.8);
+}
+.card:last-child {
+  /* מונע רווח כפול מיותר בתחתית הכרטיס האחרון */
+  margin-bottom: 0;
+}
+
+
+.btn {
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  color: #022;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.tag {
+  background: linear-gradient(90deg, rgba(166, 77, 255, 0.08), rgba(230, 138, 255, 0.06));
+  padding: 6px 10px;
+  border-radius: 999px;
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 22px;
+}
+
+.header {
+  padding: 6px 10px;
+  border-radius: 999px;
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 22px;
+}
+
+.job strong {
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.muted {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* === 4. Section: Sidebar / Profile === */
+.profile {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: center;
+  text-align: center;
+}
+
+.avatar {
+  /* This is the container DIV */
+  position: relative;
+  width: 200px; /* Set size on container */
+  height: 200px;
+  display: inline-block;
+  border-radius: 20px; /* Match image border-radius */
+  transition: transform 0.3s ease; /* Add transition for hover effect */
+}
+.avatar img {
+  /* This is the image */
+  object-fit: cover;
+  width: 100%; /* Fill the container */
+  height: 100%;
+  border-radius: 20px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2)); /* Fallback bg */
+  box-shadow: 0 8px 30px rgba(166, 77, 255, 0.08);
+}
+.avatar::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
+  mix-blend-mode: overlay;
+  border-radius: 20px; /* Match image */
+}
+
+h1 {
+  margin: 6px 0;
+  font-size: 24px;
+  letter-spacing: .6px;
+}
+h2 {
+  margin: 0;
+  font-size: 14px;
+  color: var(--muted);
+}
+.meta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+  width: 100%;
+}
+.meta a {
+  color: var(--accent);
+  text-decoration: none;
+  word-break: break-all;
+}
+
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+  justify-content: center;
+}
+.skill {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+  padding: 8px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+  color: var(--muted);
+  border: 1px solid rgba(255, 255, 255, 0.02);
+}
+
+.skillbar {
+  height: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.skillbar > i {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  border-radius: 999px;
+  transition: width 1.2s cubic-bezier(.2, .9, .2, 1);
+}
+
+/* === 5. Section: Main Content === */
+.pc-showcase {
+
+  margin-bottom: 28px;
+  border-radius: 16px;
+  overflow: hidden; /* Ensures the image respects the border-radius */
+  box-shadow: 0 12px 50px rgba(2, 8, 20, 0.7);
+  transform: translateY(14px); /* For reveal animation */
+  opacity: 0; /* For reveal animation */
+  transition: all .9s cubic-bezier(.2, .9, .2, 1);
+}
+.pc-showcase.show {
+  opacity: 1;
+  transform: none;
+}
+.pc-showcase img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 16px; /* Match parent */
+}
+
+.intro {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 14px;
+}
+.cta {
+  display: flex;
+  gap: 10px;
+}
+
+.section {
+  /* margin-top: 18px; */ /* לא נחוץ יותר כי כל כרטיס נפרד */
+}
+.section h3 {
+  margin: 0 0 10px 0;
+  font-size: 18px;
+}
+.job {
+  padding: 10px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  position: relative;
+  overflow: hidden;
+}
+.job:last-child {
+  margin-bottom: 0;
+}
+.job::before {
+  content: '';
+  position: absolute;
+  left: -30%;
+  top: -30%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 20% 30%, rgba(166, 77, 255, 0.04), transparent 10%), radial-gradient(circle at 80% 70%, rgba(230, 138, 255, 0.03), transparent 10%);
+  transform: rotate(12deg);
+}
+
+p {
+  text-align: justify;
+}
+
+.topbar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 8px;
+  position: relative;
+  z-index: 2;
+}
+
+.toggle {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 6px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.02);
+  cursor: pointer;
+  /* Reset button styles */
+  color: inherit;
+  font: inherit;
+}
+
+
+/* === 6. Animations & Effects === */
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: all .9s cubic-bezier(.2, .9, .2, 1);
+}
+.reveal.show {
+  opacity: 1;
+  transform: none;
+}
+
+.neon {
+  color: var(--accent);
+  text-shadow: 0 2px 18px rgba(166, 77, 255, 0.08), 0 0 6px rgba(230, 138, 255, 0.06);
+}
+
+.typed {
+  font-weight: 700;
+  color: #dff;
+  display: inline-block;
+}
+
+/* === 7. Media Query (Responsive) === */
+@media (max-width:900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .avatar {
+    /* This now correctly targets the container */
+    width: 120px;
+    height: 120px;
+  }
+  .container {
+    padding: 14px;
+    margin: 20px;
+  }
+}
