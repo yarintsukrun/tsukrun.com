@@ -46,19 +46,15 @@
           </div>
 
           <div style="width:100%;margin-top:14px">
-            <div class="muted">Skills Progress</div>
+            <div>Skills Progress</div>
             <div style="margin-top:8px">
               
-              <div class="muted">High-Level Programming (Python, Java, C++)</div>
-              <div class="skillbar"><i data-width="85%"></i></div>
-              <div class="muted" style="margin-top:6px">Low-Level Programming Skills (C, Assembly)</div>
-              <div class="skillbar"><i data-width="75%"></i></div>
-              <div class="muted" style="margin-top:6px">Algorithms and Data structures</div>
-              <div class="skillbar"><i data-width="85%"></i></div>
-              <div class="muted" style="margin-top:6px">Mechine Lerning (In progress this year)</div>
-              <div class="skillbar"><i data-width="30%"></i></div>
-              <div class="muted" style="margin-top:6px">Cyber Security (In progress this year)</div>
-              <div class="skillbar"><i data-width="30%"></i></div>
+              <div class="skill">High-Level Programming (Python, Java, C++)</div>
+
+              <div class="skill" style="margin-top:6px">Low-Level Programming Skills (C, Assembly)</div>
+              <div class="skill" style="margin-top:6px">Algorithms and Data structures</div>
+              <div class="skill" style="margin-top:6px">Mechine Lerning </div>
+              <div class="skill" style="margin-top:6px">Cyber Security</div>
             </div>
           </div>
         </div>
@@ -101,26 +97,8 @@
           </div>
         </section>
               </div>
-
-         <section class="card reveal" id="projects">
-          <div class="section">
-            <div class="header">Computer Science Coursework</div>
-
             
 
-            <article class="job">
-              <div class="two-col">
-              <strong>Object-oriented programming</strong>
-              <strong>Algorithms</strong>
-              <strong>Data Structures</strong>
-              <strong>Computer Cons. Workshop: From Nand to Tetris</strong>
-              <strong>Programming Workshop in C & C++</strong>
-              <strong>Introduction to machine learning (in progress)</strong>
-              <strong>Software Engineering (in progress)</strong>
-              <strong>Introdution and Topics in Cyber Security (in progress)</strong>
-              </div>
-          </div>
-        </section>
         
         <section class="card reveal" id="projects">
           <div class="section">
@@ -187,18 +165,24 @@
             <div class="header">Why Me?</div>
             <p class="muted">As a former staff officer, I have developed an objective approach to work and problem-solving, and I am an effective advisor to my superiors on various issues, consistently providing high-quality solutions. Additionally, I have successfully undertaken a hard and intense roles in the military, demonstrating my dedication, passion for delivering high-quality results on time, and commitment to hard work.</p>
           </div>
-        </section> 
+          </section>
+          
         <section class="card reveal" id="contact">
           <div class="section">
             <h3>Contact</h3>
-            <form onsubmit="event.preventDefault();alert('Thank you! Your message has been sent (demo).')" style="display:flex;flex-direction:column;gap:8px;">
-              <input placeholder="Name" style="padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:inherit" required>
-              <input placeholder="Email" type="email" style="padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:inherit" required>
-              <textarea placeholder="Message" rows="4" style="padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:inherit"></textarea>
+            <form action="https://formspree.io/f/mblqjrqz" method="POST" style="display:flex;flex-direction:column;gap:8px;">
+              <input name="name" placeholder="Name" required
+                style="padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:inherit">
+              <input name="email" type="email" placeholder="Email" required
+                style="padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:inherit">
+              <textarea name="message" rows="4" placeholder="Message"
+                style="padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:inherit"></textarea>
+
               <button class="btn" type="submit">Send</button>
             </form>
           </div>
-        </section> </main> </div> <footer class="muted">&copy; 2025 Yarin Tsukrun. All Rights Reserved.</footer>
+        </section>
+ </main> </div> <footer class="muted">&copy; 2025 Yarin Tsukrun. All Rights Reserved.</footer>
   
   </div> <script src="main.js"></script>
 </body>
