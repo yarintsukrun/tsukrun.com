@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // === 3. Typed Effect ===
   const typedEl = document.getElementById('typed');
   if (typedEl) {
-    const words = ['Automation', 'Machine Learning', 'Systems', 'Problem Solver'];
+    const words = ['Computer Science', 'Machine Learning', 'Automation', 'AI', 'Problem Solver'];
     let ti = 0, ci = 0, dir = 1;
 
     function tick() {
