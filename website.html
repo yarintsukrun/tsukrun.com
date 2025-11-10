@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Yarin Tsukrun — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;700&family=Alegreya+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#05060a; /* Background color (dark) */
+      --card:#07122a; /* Card background (darker blue) - not used directly, but good to keep */
+      --accent:#a64dff; /* PRIMARY ACCENT COLOR: Purple */
+      --accent-2:#e68aff; /* SECONDARY ACCENT COLOR: Lighter Purple */
+      --muted:#9aa4b2; /* Muted text color */
+      --glass: rgba(255,255,255,0.03); /* Glass effect for cards */
+      --glass-2: rgba(255,255,255,0.02);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:'Heebo',system-ui,Arial;
+      /* Radial gradients adjusted to purple/pink hues */
+      background:radial-gradient(1200px 600px at 10% 20%, rgba(54,13,54,0.6), transparent),
+                 radial-gradient(900px 500px at 90% 80%, rgba(60,8,34,0.5), transparent),
+                 var(--bg);
+      color:#e6eef6; overflow-x:hidden;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; line-height:1.5;
+    }
+    .stage{position:fixed;inset:0;pointer-events:none}
+    canvas#particles{width:100%;height:100%;display:block}
+
+    .container{max-width:1100px;margin:48px auto;padding:28px;position:relative;z-index:2}
+    .grid{display:grid;grid-template-columns:360px 1fr;gap:28px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:16px;padding:20px;box-shadow:0 12px 50px rgba(2,8,20,0.7);backdrop-filter: blur(8px);border:1px solid rgba(255,255,255,0.03);transition:transform .45s cubic-bezier(.2,.9,.2,1),box-shadow .35s}
+    .card:hover{transform:translateY(-6px);box-shadow:0 20px 80px rgba(2,8,20,0.8)}
+
+    .profile{display:flex;flex-direction:column;gap:14px;align-items:center;text-align:center}
+    /* Avatar background now uses purple accents */
+    .avatar{width:140px;height:140px;border-radius:20px;display:inline-grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent-2));font-weight:800;font-size:36px;color:#022;box-shadow:0 8px 30px rgba(166,77,255,0.08);position:relative;overflow:hidden}
+    .avatar::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.06),transparent);mix-blend-mode:overlay}
+    h1{margin:6px 0;font-size:24px;letter-spacing:.6px}
+    h2{margin:0;font-size:14px;color:var(--muted)}
+    .meta{display:flex;flex-direction:column;gap:8px;margin-top:8px;width:100%}
+    .meta a{color:var(--accent);text-decoration:none;word-break:break-all}
+    .skills{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;justify-content:center}
+    .skill{background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:8px 10px;border-radius:999px;font-size:13px;color:var(--muted);border:1px solid rgba(255,255,255,0.02)}
+
+    .intro{display:flex;justify-content:space-between;align-items:flex-start;gap:14px}
+    /* Tag background now uses purple accents */
+    .tag{background:linear-gradient(90deg, rgba(166,77,255,0.08), rgba(230,138,255,0.06));padding:6px 10px;border-radius:999px;color:var(--accent);font-weight:700}
+    .cta{display:flex;gap:10px}
+    /* Button background now uses purple accents */
+    .btn{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#022; padding:10px 14px;border-radius:10px;font-weight:700;text-decoration:none;display:inline-flex;gap:8px;align-items:center}
+    .section{margin-top:18px}
+    .section h3{margin:0 0 10px 0;font-size:18px}
+    .job{padding:12px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);margin-bottom:10px;position:relative;overflow:hidden}
+    /* Job before pseudo-element background now uses purple accents */
+    .job::before{content:'';position:absolute;left:-30%;top:-30%;width:200%;height:200%;background:radial-gradient(circle at 20% 30%, rgba(166,77,255,0.04), transparent 10%), radial-gradient(circle at 80% 70%, rgba(230,138,255,0.03), transparent 10%);transform:rotate(12deg)}
+    .muted{color:var(--muted);font-size:14px}
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    footer{margin-top:26px;text-align:center;color:var(--muted);font-size:13px}
+
+    /* Animated bars now use purple accents */
+    .skillbar{height:10px;background:rgba(255,255,255,0.03);border-radius:999px;overflow:hidden}
+    .skillbar > i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-2));border-radius:999px;transition:width 1.2s cubic-bezier(.2,.9,.2,1)}
+
+    /* reveal */
+    .reveal{opacity:0;transform:translateY(14px);transition:all .9s cubic-bezier(.2,.9,.2,1)}
+    .reveal.show{opacity:1;transform:none}
+
+    /* neon headings now use purple accents */
+    .neon{color:var(--accent);text-shadow:0 2px 18px rgba(166,77,255,0.08),0 0 6px rgba(230,138,255,0.06)}
+
+    /* typed */
+    .typed{font-weight:700;color:#dff;display:inline-block}
+
+    /* dark/light toggle */
+    .topbar{display:flex;justify-content:flex-end;gap:10px;align-items:center;margin-bottom:8px}
+    .toggle{background:rgba(255,255,255,0.03);padding:6px;border-radius:999px;border:1px solid rgba(255,255,255,0.02);cursor:pointer}
+
+    /* New styles for PC video/image */
+    .pc-showcase {
+      margin-bottom: 28px;
+      border-radius: 16px;
+      overflow: hidden; /* Ensures the image respects the border-radius */
+      box-shadow: 0 12px 50px rgba(2,8,20,0.7);
+      transform: translateY(14px); /* For reveal animation */
+      opacity: 0; /* For reveal animation */
+      transition: all .9s cubic-bezier(.2,.9,.2,1);
+    }
+
+    .pc-showcase.show {
+        opacity: 1;
+        transform: none;
+    }
+
+    .pc-showcase img { /* Changed from video to img */
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 16px; /* Match parent */
+    }
+
+    @media (max-width:900px){
+      .grid{grid-template-columns:1fr;}
+      .avatar{width:120px;height:120px}
+      .container{padding:14px;margin:20px}
+    }
+  </style>
+</head>
+<body>
+  <div class="stage"><canvas id="particles"></canvas></div>
+  <div class="container">
+    <div class="topbar" style="position:relative;z-index:2">
+      <div style="flex:1"></div>
+      <div class="toggle" id="themeToggle" title="Toggle dark/light">🌗</div>
+    </div>
+
+    <div class="pc-showcase reveal">
+      <img id="pcImage" src="https://i.ibb.co/Xk2zx3Y1/IMG-1155.jpg" alt="Yarin's Custom PC" />
+    </div>
+
+    <div class="grid">
+      <aside class="card reveal">
+        <div class="profile">
+          <div class="avatar" id="avatar">YT</div>
+          <div>
+            <h1 class="neon">Yarin Tsukrun</h1>
+            <h2>Computer Science Student • Former Intelligence Officer</h2>
+          </div>
+          <div class="meta">
+            <div class="muted">Phone: <a href="tel:+972548186308">+972-54-8186308</a></div>
+            <div class="muted">Email: <a href="mailto:yarin.tsukrun@gmail.com">yarin.tsukrun@gmail.com</a></div>
+            <div class="muted">GitHub: <a href="https://github.com/yarintsukrun" target="_blank">github.com/yarintsukrun</a></div>
+            <div class="muted">LinkedIn: <a href="https://linkedin.com/in/yarintsukrun" target="_blank">linkedin.com/in/yarintsukrun</a></div>
+          </div>
+
+          <div class="skills" aria-hidden>
+            <span class="skill">C++</span>
+            <span class="skill">Python</span>
+            <span class="skill">Git / GitLab</span>
+            <span class="skill">Linux</span>
+            <span class="skill">Machine Learning</span>
+            <span class="skill">Automation</span>
+          </div>
+
+          <div style="width:100%;margin-top:12px;display:flex;gap:10px;justify-content:center">
+            <a class="btn" href="./resume.pdf" download>Download Resume</a>
+            <a class="btn" href="#contact">Contact</a>
+          </div>
+
+          <div style="width:100%;margin-top:14px">
+            <div class="muted">Skills Progress</div>
+            <div style="margin-top:8px">
+              <div class="muted">C++</div>
+              <div class="skillbar"><i data-width="92%"></i></div>
+              <div class="muted" style="margin-top:6px">Python</div>
+              <div class="skillbar"><i data-width="80%"></i></div>
+              <div class="muted" style="margin-top:6px">Machine Learning</div>
+              <div class="skillbar"><i data-width="66%"></i></div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <main>
+        <div class="card reveal">
+          <div class="intro">
+            <div>
+              <div class="tag">Summary</div>
+              <h2 style="margin-top:8px">Professional Summary — <span class="typed" id="typed"></span></h2>
+              <p class="muted">Second-year Computer Science student at the Hebrew University and a former Intelligence Officer. Passionate about automation, AI, and machine learning, with strong leadership, analytical, and execution skills developed through military command experience.</p>
+            </div>
+            <div class="cta">
+              <a class="btn" href="#projects">My Projects</a>
+            </div>
+          </div>
+
+          <div class="section" id="experience">
+            <h3>Professional Experience</h3>
+            <div class="job">
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <strong>Intelligence Officer — IDF</strong>
+                <span class="muted">2017 - 2021</span>
+              </div>
+              <div class="muted">Roles: Head of Intelligence Department (Radar Battalion 611), Head of Intelligence Department (Battalion 90)</div>
+              <p>Responsible for operational planning, intelligence analysis, and team management. Led intelligence gathering operations, issued real-time alerts, and supervised mission control rooms under pressure. Developed decision-making, leadership, and teamwork skills.</p>
+            </div>
+
+            <div class="job">
+              <strong>Academic Projects</strong>
+              <div class="muted">Courses: Programming Workshop in C &amp; C++, Introduction to Computer Science</div>
+              <ul class="muted">
+                <li>Implemented a neural network for handwritten digit recognition</li>
+                <li>Developed a Netflix-style recommendation system</li>
+                <li>Built image processing and game projects in Python</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="section" id="education">
+            <h3>Education</h3>
+            <div class="job">
+              <strong>B.Sc. in Computer Science</strong>
+              <div class="muted">Hebrew University of Jerusalem — 2023–Present</div>
+            </div>
+          </div>
+
+          <div class="section" id="awards">
+            <h3>Awards & Certificates</h3>
+            <div class="two-col">
+              <div class="job">
+                <strong>Excellence Award — Independence Day</strong>
+                <div class="muted">2021 — Intelligence Department Commander</div>
+              </div>
+              <div class="job">
+                <strong>Excellence Award — Battalion 90 Commander</strong>
+                <div class="muted">2021</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="section" id="why">
+            <h3>Why Me?</h3>
+            <p class="muted">As a former officer with leadership experience, I developed an analytical mindset, problem-solving skills, and the ability to deliver high-quality results under demanding conditions. I’m passionate about technology, efficiency, and learning new tools quickly.</p>
+          </div>
+
+          <div class="section" id="projects">
+            <h3>Highlighted Projects</h3>
+            <div class="job">
+              <strong>Neural Network for Digit Recognition</strong>
+              <div class="muted">C++ / Python</div>
+              <p class="muted">Implemented a basic feedforward neural network to classify handwritten digits using data preprocessing, training, and evaluation techniques.</p>
+            </div>
+            <div class="job">
+              <strong>Recommendation System (Netflix-like)</strong>
+              <div class="muted">C++</div>
+              <p class="muted">Developed a hybrid recommendation engine combining content-based and collaborative filtering methods, focusing on efficient data structures.</p>
+            </div>
+          </div>
+
+          <div class="section" id="contact">
+            <h3>Contact</h3>
+            <form onsubmit="event.preventDefault();alert('Thank you! Your message has been sent (demo).')" style="display:flex;flex-direction:column;gap:8px;">
+              <input placeholder="Name" style="padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:inherit" required>
+              <input placeholder="Email" type="email" style="padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:inherit" required>
+              <textarea placeholder="Message" rows="4" style="padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:inherit"></textarea>
+              <button class="btn" type="submit">Send</button>
+            </form>
+          </div>
+
+        </div>
+        <footer class="muted">Auto-generated from your resume — enhanced with animations and interactive elements.</footer>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    // Particles background (lightweight)
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    let W, H, particles = [];
+    function resize(){W=canvas.width = innerWidth; H=canvas.height = innerHeight}
+    window.addEventListener('resize', resize); resize();
+    function rand(min,max){return Math.random()*(max-min)+min}
+    class P{constructor(){this.reset()} reset(){this.x=rand(0,W);this.y=rand(0,H);this.r=rand(0.6,2.6);this.vx=rand(-0.3,0.3);this.vy=rand(-0.2,0.2);this.alpha=rand(0.08,0.45)} move(){this.x+=this.vx;this.y+=this.vy; if(this.x< -10) this.x=W+10; if(this.x>W+10) this.x=-10; if(this.y<-10) this.y=H+10; if(this.y>H+10) this.y=-10} draw(){ctx.beginPath(); /* Particles now use a purple shade */ ctx.fillStyle='rgba(230,138,255,'+this.alpha+')'; ctx.arc(this.x,this.y,this.r,0,Math.PI*2); ctx.fill()}}
+    for(let i=0;i<140;i++) particles.push(new P());
+    function loop(){ctx.clearRect(0,0,W,H); for(let p of particles){p.move();p.draw()} requestAnimationFrame(loop)} loop();
+
+    // Reveal on scroll
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show')} })},{threshold:0.12});
+    reveals.forEach(r=>io.observe(r));
+
+    // Typed effect (small)
+    const words = ['Automation', 'Machine Learning', 'Systems', 'Problem Solver'];
+    let ti=0,ci=0,dir=1; const el=document.getElementById('typed');
+    function tick(){const w=words[ti]; ci+=dir?1:-1; el.textContent=w.slice(0,ci); if(ci===w.length){dir=0; setTimeout(tick,900); } else if(ci===0 && dir===0){dir=1; ti=(ti+1)%words.length; setTimeout(tick,300);} else setTimeout(tick,70)} tick();
+
+    // Skill bars animate when visible
+    const bars = document.querySelectorAll('.skillbar i');
+    const barIO = new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){const i = e.target.querySelector('i'); i.style.width = i.getAttribute('data-width');}})},{threshold:0.2});
+    document.querySelectorAll('.card').forEach(c=>barIO.observe(c));
+
+    // Theme toggle (note: this toggle currently just changes background and muted color)
+    const toggle = document.getElementById('themeToggle');
+    toggle.addEventListener('click', ()=>{
+      if(document.documentElement.style.getPropertyValue('--bg') === '#fff'){ // light -> dark
+        document.documentElement.style.setProperty('--bg','#05060a'); document.documentElement.style.setProperty('--muted','#9aa4b2');
+      } else {
+        document.documentElement.style.setProperty('--bg','#ffffff'); document.documentElement.style.setProperty('--muted','#556');
+      }
+    });
+
+    // subtle avatar hover effect
+    const avatar = document.getElementById('avatar');
+    avatar.addEventListener('mousemove', (e)=>{const r = avatar.getBoundingClientRect(); const x=(e.clientX-r.left)/r.width*30-15; const y=(e.clientY-r.top)/r.height*30-15; avatar.style.transform = `translate3d(${x}px, ${y}px, 0) rotate(${x/3}deg)`});
+    avatar.addEventListener('mouseleave', ()=>avatar.style.transform='none');
+
+    // Trigger reveal for the image showcase
+    document.addEventListener('DOMContentLoaded', () => {
+        const pcShowcase = document.querySelector('.pc-showcase');
+        if (pcShowcase && !pcShowcase.classList.contains('show')) {
+            setTimeout(() => {
+                pcShowcase.classList.add('show');
+            }, 100);
+        }
+    });
+  </script>
+</body>
+</html>
